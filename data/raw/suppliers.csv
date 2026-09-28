@@ -1,0 +1,51 @@
+supplier_id,supplier_name,supplier_country,supplier_category,reliability_score,average_delivery_days
+SUP-00001,"Simpson, Smith and Velazquez",India,Strategic,0.89,5
+SUP-00002,Lowe Inc,Germany,Preferred,0.89,12
+SUP-00003,Flores and Sons,UK,Strategic,0.83,2
+SUP-00004,"Lopez, Phillips and Buchanan",India,Strategic,0.69,10
+SUP-00005,Thompson-Long,UK,Strategic,0.82,13
+SUP-00006,"Price, Mckay and Miller",UK,New,0.69,11
+SUP-00007,"Strickland, Barnett and Moore",USA,Strategic,0.9,4
+SUP-00008,Smith Group,Singapore,Standard,0.71,5
+SUP-00009,Jordan-Browning,USA,Strategic,0.64,3
+SUP-00010,"Mcintosh, Young and Lutz",USA,Standard,0.84,14
+SUP-00011,"Beck, Williams and Harris",India,New,0.81,8
+SUP-00012,"Smith, Harris and Bailey",India,Standard,0.92,11
+SUP-00013,"Johnson, Ramos and Bennett",USA,Preferred,0.87,2
+SUP-00014,Duncan-Bryant,Germany,Standard,0.98,15
+SUP-00015,Blair-Gross,Germany,Strategic,0.75,9
+SUP-00016,Gutierrez PLC,USA,Preferred,0.74,5
+SUP-00017,Smith Ltd,USA,Strategic,0.84,4
+SUP-00018,Rivera-Hernandez,UK,Preferred,0.66,8
+SUP-00019,Terry LLC,USA,Preferred,0.87,15
+SUP-00020,"Fox, Walker and James",India,Preferred,0.92,14
+SUP-00021,Brown-Daniels,USA,New,0.7,5
+SUP-00022,"Smith, Henderson and Perez",UK,Standard,0.68,9
+SUP-00023,Morrison-Whitehead,Singapore,New,0.66,4
+SUP-00024,"Baker, Smith and Hodges",Germany,Standard,0.89,8
+SUP-00025,"Hubbard, Hays and Long",UK,New,0.74,4
+SUP-00026,"Brown, Weber and Smith",UK,New,0.64,2
+SUP-00027,Garcia PLC,India,Preferred,0.84,14
+SUP-00028,"Reyes, Stanley and Bell",Singapore,Strategic,0.75,11
+SUP-00029,"Lara, Rose and Clark",Singapore,Standard,0.98,15
+SUP-00030,Cox Ltd,India,Strategic,0.87,10
+SUP-00031,Nguyen-Olson,USA,Standard,0.64,8
+SUP-00032,White-Whitaker,Germany,New,0.6,13
+SUP-00033,Butler Inc,USA,Preferred,0.8,3
+SUP-00034,Walton-Thompson,USA,Preferred,0.66,14
+SUP-00035,Velazquez-Nelson,Germany,Strategic,0.83,9
+SUP-00036,White-Hughes,India,Strategic,0.96,15
+SUP-00037,Davis LLC,USA,Preferred,0.62,11
+SUP-00038,"Kim, Vargas and Simpson",India,Strategic,0.89,15
+SUP-00039,Thompson-Beck,India,Preferred,0.65,9
+SUP-00040,Ballard-Fernandez,UK,Preferred,0.7,15
+SUP-00041,Parker Ltd,UK,New,0.98,10
+SUP-00042,"Dixon, Gates and Nelson",Germany,Standard,0.76,12
+SUP-00043,Chen LLC,USA,New,0.95,9
+SUP-00044,Miller LLC,India,Preferred,0.69,7
+SUP-00045,"Bartlett, Nichols and Bowman",India,Preferred,0.83,2
+SUP-00046,"Johnson, Brown and Cole",India,Strategic,0.69,2
+SUP-00047,Butler-Montgomery,USA,Strategic,0.8,6
+SUP-00048,Benton LLC,Singapore,Preferred,0.81,13
+SUP-00049,Baird PLC,UK,New,0.69,9
+SUP-00050,Barrett-Gonzales,Singapore,Preferred,0.64,12

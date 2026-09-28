@@ -1,0 +1,13 @@
+pandas
+numpy
+faker
+openpyxl
+sqlalchemy
+psycopg[binary]
+pm4py
+python-dotenv
+jupyter
+psycopg2-binary
+fastapi
+uvicorn
+openai
