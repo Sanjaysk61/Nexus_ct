@@ -1,0 +1,101 @@
+employee_id,employee_name,department,role
+EMP-00001,James Ross,Engineering,Warehouse Operator
+EMP-00002,William James,Marketing,Warehouse Operator
+EMP-00003,Noah Martinez,Engineering,Manager
+EMP-00004,Jose Carson,Engineering,Finance Analyst
+EMP-00005,Nancy Torres,HR,Manager
+EMP-00006,Allison Holmes,HR,Warehouse Operator
+EMP-00007,Johnny Willis,Engineering,Manager
+EMP-00008,Brittany Porter,HR,Finance Analyst
+EMP-00009,Matthew Douglas,Finance,Procurement Specialist
+EMP-00010,Joseph Montoya,Operations,Procurement Specialist
+EMP-00011,Joseph Peterson,Sales,Procurement Specialist
+EMP-00012,Dawn Delgado,Finance,Manager
+EMP-00013,Anthony Chandler,Procurement,Manager
+EMP-00014,Mallory Miller,Marketing,Manager
+EMP-00015,Sydney Cole,Operations,Requester
+EMP-00016,Matthew Cervantes,Marketing,Finance Analyst
+EMP-00017,Brandon Reese,Sales,Warehouse Operator
+EMP-00018,Tracie Davies,Engineering,Finance Analyst
+EMP-00019,Alicia Anderson,IT,Manager
+EMP-00020,Jamie Schneider,Marketing,Finance Analyst
+EMP-00021,Lisa Brown,IT,Warehouse Operator
+EMP-00022,Monica Christensen,Marketing,Finance Analyst
+EMP-00023,Kelly Mcintosh,IT,Procurement Specialist
+EMP-00024,Terri Thomas,HR,Finance Analyst
+EMP-00025,Nancy Evans,Marketing,Warehouse Operator
+EMP-00026,Stephen Nunez,Operations,Finance Analyst
+EMP-00027,Lawrence Moran,Operations,Procurement Specialist
+EMP-00028,Amy King,Marketing,Finance Analyst
+EMP-00029,Rebecca Bender,IT,Finance Analyst
+EMP-00030,Michael Morris,Sales,Finance Analyst
+EMP-00031,Jennifer Shaw,Procurement,Finance Analyst
+EMP-00032,Christopher Chavez,Procurement,Warehouse Operator
+EMP-00033,Ashley Mendoza,IT,Finance Analyst
+EMP-00034,Mark Cameron,IT,Requester
+EMP-00035,Robert Kemp,Marketing,Manager
+EMP-00036,Nancy Walker,Engineering,Manager
+EMP-00037,Krista Zavala,IT,Procurement Specialist
+EMP-00038,James Shepherd,Marketing,Procurement Specialist
+EMP-00039,Aaron Hartman,Operations,Finance Analyst
+EMP-00040,Jeremy Glenn,Sales,Procurement Specialist
+EMP-00041,Alyssa Payne,Marketing,Procurement Specialist
+EMP-00042,Cynthia Hernandez,Marketing,Procurement Specialist
+EMP-00043,Nathaniel Anderson MD,Finance,Finance Analyst
+EMP-00044,Robert Cabrera,IT,Warehouse Operator
+EMP-00045,Stephen Li,IT,Procurement Specialist
+EMP-00046,Lisa Turner,Operations,Requester
+EMP-00047,Jennifer Roth,IT,Requester
+EMP-00048,James Williams,Operations,Manager
+EMP-00049,Carlos Cole,IT,Warehouse Operator
+EMP-00050,Deborah Rivas,Procurement,Manager
+EMP-00051,Ronald Crawford,Procurement,Finance Analyst
+EMP-00052,Holly Spencer,Finance,Warehouse Operator
+EMP-00053,Thomas Robinson,Operations,Finance Analyst
+EMP-00054,Alexander Blackwell,HR,Procurement Specialist
+EMP-00055,Amy Martinez,Procurement,Warehouse Operator
+EMP-00056,Valerie Woods,Finance,Manager
+EMP-00057,Joseph Miller,HR,Requester
+EMP-00058,William Anderson,IT,Procurement Specialist
+EMP-00059,Tracy Perry,Marketing,Finance Analyst
+EMP-00060,Robert Barrera,Operations,Requester
+EMP-00061,Anthony Martinez,Operations,Requester
+EMP-00062,Stephen Brown,HR,Warehouse Operator
+EMP-00063,Elizabeth Morales,Finance,Warehouse Operator
+EMP-00064,Ashley Brown,IT,Procurement Specialist
+EMP-00065,John Kline,Marketing,Procurement Specialist
+EMP-00066,Michael Aguilar,Finance,Warehouse Operator
+EMP-00067,Whitney Wright,Sales,Requester
+EMP-00068,Dalton Robbins,Marketing,Finance Analyst
+EMP-00069,Erica Carrillo,Finance,Finance Analyst
+EMP-00070,Sara Pruitt,Sales,Finance Analyst
+EMP-00071,Lynn Clayton,Procurement,Finance Analyst
+EMP-00072,Tracy Morris,Procurement,Warehouse Operator
+EMP-00073,Nicole Miller,HR,Warehouse Operator
+EMP-00074,Darlene Evans,Engineering,Finance Analyst
+EMP-00075,Robert Yang,Marketing,Warehouse Operator
+EMP-00076,Andrea Smith,HR,Procurement Specialist
+EMP-00077,Michael Green,Operations,Requester
+EMP-00078,Donna Johnson,HR,Finance Analyst
+EMP-00079,Heather Conley,Operations,Finance Analyst
+EMP-00080,Dennis Chen,Marketing,Procurement Specialist
+EMP-00081,Ashley Murphy,IT,Finance Analyst
+EMP-00082,Stephen Atkinson,Sales,Manager
+EMP-00083,Julie Nelson,Engineering,Manager
+EMP-00084,Amanda White,Sales,Procurement Specialist
+EMP-00085,Ruben Schroeder,Sales,Procurement Specialist
+EMP-00086,Tara Allen,HR,Warehouse Operator
+EMP-00087,Paula Leach,IT,Warehouse Operator
+EMP-00088,Janice Stewart,Operations,Requester
+EMP-00089,Jessica Brown,Operations,Finance Analyst
+EMP-00090,James Terry,Engineering,Warehouse Operator
+EMP-00091,Danielle Hunt,Operations,Finance Analyst
+EMP-00092,Jordan Walls,Engineering,Finance Analyst
+EMP-00093,Lawrence Dennis,IT,Requester
+EMP-00094,Tonya Baker,HR,Manager
+EMP-00095,Dustin Baker,Marketing,Manager
+EMP-00096,Larry Thompson,HR,Warehouse Operator
+EMP-00097,Andrew Wilson,Sales,Finance Analyst
+EMP-00098,Alexander Levine,Sales,Finance Analyst
+EMP-00099,Michael Waller,Sales,Procurement Specialist
+EMP-00100,Robert Nguyen,Engineering,Procurement Specialist
