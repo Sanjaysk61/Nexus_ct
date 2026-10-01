@@ -2,7 +2,9 @@ def generate_action_plan(root_cause_result):
     risk_level = root_cause_result["risk_level"]
     recommended_action = root_cause_result["recommended_action"]
     approval_route = root_cause_result["approval_route"]
-    human_review_required = root_cause_result["human_review_required"]
+    human_review_required = root_cause_result[
+        "human_review_required"
+    ]
 
     root_causes = root_cause_result["root_causes"]
 

@@ -30,6 +30,5 @@ def get_audit_logs(purchase_order_id):
     return [
         log
         for log in audit_logs
-        if log["purchase_order_id"]
-        == purchase_order_id
+        if log["purchase_order_id"] == purchase_order_id
     ]

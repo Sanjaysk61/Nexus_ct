@@ -9,8 +9,11 @@ def execute_action_plan(
         return {
             "purchase_order_id": purchase_order_id,
             "execution_status": "EXECUTED",
-            "message": "No human approval was required.",
+            "message": (
+                "No human approval was required."
+            ),
             "executed_actions": [],
+            "executed_at": datetime.utcnow().isoformat(),
         }
 
     executed_actions = []
