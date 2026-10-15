@@ -247,7 +247,9 @@ def generate_downstream_documents(purchase_orders, suppliers):
             )
         )
 
-        supplier_delay = max(1, supplier_delay)
+        # Keep at least one day between PO creation and receipt so that
+        # supplier confirmation can occur before goods receipt.
+        supplier_delay = max(2, supplier_delay)
 
         if po["status"] == "Delayed":
             supplier_delay += random.randint(5, 15)
@@ -384,85 +386,90 @@ def generate_process_events(
             ),
         ]
 
+        # --------------------------------------------------
+        # 1. SUPPLIER CONFIRMATION
+        # --------------------------------------------------
+        po_date = pd.Timestamp(po["po_date"])
+        goods_receipt_time = pd.Timestamp(gr["receipt_date"])
+
         supplier_confirmation_delay = random.randint(1, 5)
-
         if po["status"] == "Delayed":
-            supplier_confirmation_delay += random.randint(
-                5,
-                12,
-            )
+            supplier_confirmation_delay += random.randint(5, 12)
 
-        supplier_confirmation_time = (
-            pd.Timestamp(po["po_date"])
-            + timedelta(days=supplier_confirmation_delay)
+        supplier_confirmation_time = po_date + timedelta(
+            days=supplier_confirmation_delay
+        )
+
+        # Confirmation must be after the PO and before receipt.
+        # generate_downstream_documents guarantees at least 2 days between them.
+        latest_confirmation_time = goods_receipt_time - timedelta(days=1)
+        supplier_confirmation_time = min(
+            supplier_confirmation_time,
+            latest_confirmation_time,
         )
 
         event_sequence.append(
-            (
-                "Supplier Confirmation",
-                supplier_confirmation_time,
-            )
+            ("Supplier Confirmation", supplier_confirmation_time)
         )
 
-        event_sequence.append(
-            (
-                "Goods Receipt",
-                pd.Timestamp(gr["receipt_date"]),
-            )
-        )
+        # --------------------------------------------------
+        # 2. GOODS RECEIPT AND INVOICE RECEIVED
+        # --------------------------------------------------
+        event_sequence.append(("Goods Receipt", goods_receipt_time))
 
-        event_sequence.append(
-            (
-                "Invoice Received",
-                pd.Timestamp(invoice["invoice_date"]),
-            )
-        )
+        invoice_received_time = pd.Timestamp(invoice["invoice_date"])
+        event_sequence.append(("Invoice Received", invoice_received_time))
+
+        # --------------------------------------------------
+        # 3. INVOICE MISMATCH / MANUAL INTERVENTION
+        # --------------------------------------------------
+        mismatch_time = None
+        manual_time = None
 
         if invoice["invoice_status"] == "Mismatch":
-            mismatch_time = (
-                pd.Timestamp(invoice["invoice_date"])
-                + timedelta(hours=4)
+            mismatch_time = invoice_received_time + timedelta(hours=4)
+            manual_time = mismatch_time + timedelta(
+                days=random.randint(1, 4)
             )
 
-            event_sequence.append(
-                (
-                    "Invoice Mismatch",
-                    mismatch_time,
-                )
-            )
+            event_sequence.append(("Invoice Mismatch", mismatch_time))
+            event_sequence.append(("Manual Intervention", manual_time))
 
-            manual_time = (
-                mismatch_time
-                + timedelta(days=random.randint(1, 4))
-            )
+        # --------------------------------------------------
+        # 4. INVOICE VERIFICATION
+        # --------------------------------------------------
+        if invoice["invoice_status"] == "Verified":
+            verification_delay = random.randint(1, 3)
+        else:
+            verification_delay = random.randint(3, 12)
 
-            event_sequence.append(
-                (
-                    "Manual Intervention",
-                    manual_time,
-                )
-            )
-
-        event_sequence.append(
-            (
-                "Invoice Verification",
-                pd.Timestamp(invoice["invoice_date"])
-                + timedelta(
-                    days=(
-                        random.randint(1, 3)
-                        if invoice["invoice_status"] == "Verified"
-                        else random.randint(3, 12)
-                    )
-                ),
-            )
+        invoice_verification_time = invoice_received_time + timedelta(
+            days=verification_delay
         )
 
+        # A mismatched invoice cannot be verified until manual intervention
+        # has taken place.
+        if manual_time is not None and invoice_verification_time <= manual_time:
+            invoice_verification_time = manual_time + timedelta(days=1)
+
         event_sequence.append(
-            (
-                "Payment",
-                pd.Timestamp(payment["payment_date"]),
-            )
+            ("Invoice Verification", invoice_verification_time)
         )
+
+        # --------------------------------------------------
+        # 5. PAYMENT
+        # --------------------------------------------------
+        payment_time = pd.Timestamp(payment["payment_date"])
+
+        # Payment must occur after invoice verification. Update the source
+        # payments DataFrame too, so the CSV and event log stay consistent.
+        if payment_time <= invoice_verification_time:
+            payment_time = invoice_verification_time + timedelta(
+                days=random.randint(1, 3)
+            )
+            payments.loc[payment.name, "payment_date"] = payment_time
+
+        event_sequence.append(("Payment", payment_time))
 
         for activity, timestamp in event_sequence:
             events.append(
