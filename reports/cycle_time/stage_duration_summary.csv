@@ -1,0 +1,11 @@
+stage,case_transitions,average_hours,median_hours,maximum_hours,p90_hours
+Supplier Confirmation -> Goods Receipt,10000,154.4736,144.0,648.0,312.0
+Manual Intervention -> Invoice Verification,787,116.20330368487929,116.0,260.0,212.0
+Invoice Mismatch -> Manual Intervention,787,60.2287166454892,72.0,96.0,96.0
+Goods Receipt -> Invoice Received,10000,71.5272,72.0,120.0,120.0
+Purchase Order Created -> Supplier Confirmation,10000,103.2744,72.0,408.0,264.0
+Invoice Verification -> Payment,10000,78.4528,72.0,312.0,144.0
+Purchase Requisition Created -> Purchase Requisition Approved,10000,108.0312,72.0,360.0,264.0
+Invoice Received -> Invoice Verification,9213,48.07294041028981,48.0,72.0,72.0
+Purchase Requisition Approved -> Purchase Order Created,10000,23.94,24.0,48.0,48.0
+Invoice Received -> Invoice Mismatch,787,4.0,4.0,4.0,4.0
