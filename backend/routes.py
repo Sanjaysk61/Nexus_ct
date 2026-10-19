@@ -441,6 +441,112 @@ def get_process_intelligence_ai(
     }
 
 
+# -------------------------------------------------------------
+# DATA SCIENCE & ADVANCED PROCESS INTELLIGENCE ENDPOINTS
+# -------------------------------------------------------------
+
+_cycle_time_analyzer = None
+_conformance_miner = None
+_predictive_delay_model = None
+
+
+def _get_cycle_time_analyzer():
+    global _cycle_time_analyzer
+    if _cycle_time_analyzer is None:
+        from process_intelligence.cycle_time_analytics import CycleTimeAnalytics
+        _cycle_time_analyzer = CycleTimeAnalytics()
+    return _cycle_time_analyzer
+
+
+def _get_conformance_miner():
+    global _conformance_miner
+    if _conformance_miner is None:
+        from process_intelligence.conformance_mining import ConformanceMining
+        _conformance_miner = ConformanceMining()
+    return _conformance_miner
+
+
+def _get_predictive_model():
+    global _predictive_delay_model
+    if _predictive_delay_model is None:
+        from process_intelligence.predictive_models import DelayPredictionModel
+        _predictive_delay_model = DelayPredictionModel()
+        _predictive_delay_model.train()
+    return _predictive_delay_model
+
+
+@router.get("/process/cycle-times")
+def get_process_cycle_times():
+    """Returns P50, P90, P99 transition percentiles and executive SLA summary."""
+    analyzer = _get_cycle_time_analyzer()
+    return analyzer.get_executive_summary()
+
+
+@router.get("/process/transitions")
+def get_process_transitions():
+    """Returns detailed transition statistics across all consecutive P2P activities."""
+    analyzer = _get_cycle_time_analyzer()
+    return analyzer.compute_transition_statistics()
+
+
+@router.get("/process/bottlenecks")
+def get_process_bottlenecks(top_n: int = 5):
+    """Identifies and ranks top process bottlenecks by P90 duration and tail variance."""
+    analyzer = _get_cycle_time_analyzer()
+    return analyzer.identify_bottlenecks(top_n=top_n)
+
+
+@router.get("/process/conformance")
+def get_process_conformance():
+    """Returns overall conformance rate (%), happy path compliance, and deviation breakdown."""
+    miner = _get_conformance_miner()
+    return miner.get_conformance_summary()
+
+
+@router.get("/process/variants")
+def get_process_variants(top_n: int = 10):
+    """Extracts top process variants, frequency coverage, and specific compliance violations."""
+    miner = _get_conformance_miner()
+    return miner.compute_variant_distribution(top_n=top_n)
+
+
+@router.get("/process/predict-delay/{purchase_order_id}")
+def predict_po_delay(
+    purchase_order_id: str,
+    db: Session = Depends(get_db),
+):
+    """Cost-sensitive ML delivery delay prediction with calibrated estimative confidence."""
+    po = (
+        db.query(PurchaseOrder)
+        .filter(PurchaseOrder.purchase_order_id == purchase_order_id)
+        .first()
+    )
+    if not po:
+        raise HTTPException(status_code=404, detail="Purchase order not found")
+
+    supplier = (
+        db.query(Supplier)
+        .filter(Supplier.supplier_id == po.supplier_id)
+        .first()
+    )
+
+    amount = float(po.total_amount or 10000.0)
+    reliability = float(supplier.reliability_score if supplier and supplier.reliability_score else 0.80)
+
+    model = _get_predictive_model()
+    prediction = model.predict_order_delay(
+        total_amount=amount,
+        reliability_score=reliability,
+        promised_lead_days=14.0,
+        order_day_of_week=po.order_date.weekday() if hasattr(po, "order_date") and po.order_date else 1,
+    )
+
+    prediction["purchase_order_id"] = purchase_order_id
+    prediction["supplier_id"] = po.supplier_id
+    return prediction
+
+
+
 @router.get(
     "/procurement/root-cause/{purchase_order_id}"
 )

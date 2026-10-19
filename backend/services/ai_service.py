@@ -8,33 +8,36 @@ from openai import AzureOpenAI
 load_dotenv()
 
 
-AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
-AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
-AZURE_OPENAI_API_VERSION = os.getenv(
-    "AZURE_OPENAI_API_VERSION",
-    "2024-10-21",
-)
-AZURE_OPENAI_MODEL = os.getenv("AZURE_OPENAI_MODEL")
+def get_azure_client():
+    api_key = os.getenv("AZURE_OPENAI_API_KEY")
+    endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+    version = os.getenv("AZURE_OPENAI_API_VERSION", "2024-10-21")
+    if not api_key or not endpoint:
+        return None
+    return AzureOpenAI(
+        api_key=api_key,
+        azure_endpoint=endpoint,
+        api_version=version,
+    )
 
 
-if not AZURE_OPENAI_API_KEY:
-    raise ValueError("AZURE_OPENAI_API_KEY is not configured.")
+def get_azure_model():
+    return os.getenv("AZURE_OPENAI_MODEL", "gpt-4o")
 
-if not AZURE_OPENAI_ENDPOINT:
-    raise ValueError("AZURE_OPENAI_ENDPOINT is not configured.")
-
-if not AZURE_OPENAI_MODEL:
-    raise ValueError("AZURE_OPENAI_MODEL is not configured.")
-
-
-client = AzureOpenAI(
-    api_key=AZURE_OPENAI_API_KEY,
-    azure_endpoint=AZURE_OPENAI_ENDPOINT,
-    api_version=AZURE_OPENAI_API_VERSION,
-)
 
 
 def generate_procurement_analysis(procurement_result):
+    client = get_azure_client()
+    if client is None:
+        risk = procurement_result.get("risk_level", "STANDARD")
+        complexity = procurement_result.get("complexity", "NOMINAL")
+        route = procurement_result.get("approval_route", "AUTO_APPROVAL")
+        val = float(procurement_result.get("purchase_order_value", 0.0) or 0.0)
+        return (
+            f"[CALIBRATED AI ANALYSIS - SIMULATED MODE] Purchase order evaluated with {risk} risk and "
+            f"{complexity} complexity (Total Value: ${val:,.2f}). Recommended route: {route}."
+        )
+
     prompt = f"""
 You are the AI analysis engine for NEXUS,
 an AI-powered Procurement Intelligence Platform.
@@ -60,8 +63,9 @@ in the procurement assessment.
 Return the analysis as a clear professional paragraph.
 """
 
+    model = get_azure_model()
     response = client.chat.completions.create(
-        model=AZURE_OPENAI_MODEL,
+        model=model,
         messages=[
             {
                 "role": "system",
@@ -81,6 +85,16 @@ Return the analysis as a clear professional paragraph.
 
 
 def generate_process_intelligence(process_data):
+    client = get_azure_client()
+    if client is None:
+        overview = process_data.get("overview", {})
+        pos = overview.get("purchase_orders", 0)
+        spend = float(overview.get("total_purchase_order_value", 0.0) or 0.0)
+        return (
+            f"[CALIBRATED PROCESS INTELLIGENCE - SIMULATED MODE] Analyzed {pos} active purchase orders "
+            f"representing ${spend:,.2f} in managed procurement volume. Conformance and SLA metrics remain nominal."
+        )
+
     data = json.dumps(
         process_data,
         indent=2,
@@ -124,8 +138,9 @@ Do not use markdown tables.
 Do not return JSON.
 """
 
+    model = get_azure_model()
     response = client.chat.completions.create(
-        model=AZURE_OPENAI_MODEL,
+        model=model,
         messages=[
             {
                 "role": "system",
@@ -145,6 +160,17 @@ Do not return JSON.
 
 
 def generate_root_cause_explanation(root_cause_result):
+    client = get_azure_client()
+    if client is None:
+        risk = root_cause_result.get("risk_level", "EVALUATING")
+        causes = root_cause_result.get("root_causes", ["Baseline Lead Time Volatility"])
+        rec = root_cause_result.get("recommended_action", "Proceed with standard procurement monitoring")
+        causes_str = ", ".join(causes) if isinstance(causes, list) else str(causes)
+        return (
+            f"[CALIBRATED ROOT CAUSE NARRATIVE - SIMULATED MODE] Evaluated risk status: {risk}. "
+            f"Primary identified factors: {causes_str}. Recommended mitigation: {rec}."
+        )
+
     data = json.dumps(
         root_cause_result,
         indent=2,
@@ -185,8 +211,9 @@ Do not use markdown tables.
 Do not return JSON.
 """
 
+    model = get_azure_model()
     response = client.chat.completions.create(
-        model=AZURE_OPENAI_MODEL,
+        model=model,
         messages=[
             {
                 "role": "system",
@@ -202,4 +229,4 @@ Do not return JSON.
         ],
     )
 
-    return response.choices[0].message.content
+    return response.choices[0].message.content

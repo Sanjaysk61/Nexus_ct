@@ -8,10 +8,7 @@ from sqlalchemy import (
     Integer,
     String,
 )
-from sqlalchemy.orm import declarative_base
-
-
-Base = declarative_base()
+from backend.database import Base
 
 
 class Supplier(Base):
