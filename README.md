@@ -1,161 +1,128 @@
 # 🏗️ NEXUS Control Tower (NEXUS-CT)
-### *Autonomous Process Mining & Cognitive Intelligence Platform for Enterprise Procure-to-Pay (P2P)*
+### *Enterprise Forward Deployed Engineering (FDE) Platform for Autonomous Procure-to-Pay (P2P) Intelligence*
 
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Process Mining](https://img.shields.io/badge/Process%20Mining-PM4Py-blue.svg)](https://pm4py.fit.fraunhofer.de/)
-[![Intelligence](https://img.shields.io/badge/Intelligence-Azure%20OpenAI%20%7C%20Heuer%20ACH-0078D4.svg?logo=microsoftazure&logoColor=white)](docs/process-intelligence.md)
-[![Calibration](https://img.shields.io/badge/Calibration-Sherman%20Kent%20CIA%20Standard-emerald.svg)](docs/process-intelligence.md)
+[![RAG](https://img.shields.io/badge/RAG-Multi--Tenant%20RBAC-indigo.svg)](backend/services/rag_service.py)
+[![Intelligence](https://img.shields.io/badge/Intelligence-Heuer%20ACH%20%7C%20Kent%20CIA-0078D4.svg)](docs/process-intelligence.md)
+[![Tests](https://img.shields.io/badge/Tests-19%2F19%20Passing-emerald.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
 ## 📌 Executive Summary
 
-**NEXUS Control Tower** is an enterprise-grade procurement intelligence platform that transforms reactive supply-chain operations into proactive, calibrated, autonomous process intelligence.
+**NEXUS Control Tower (NEXUS-CT)** is an enterprise-grade **Forward Deployed AI Platform** that transforms enterprise supply-chain and procurement operations into a proactive, calibrated, autonomous process cockpit.
 
-Sitting as an intelligent cognitive layer above existing ERPs (**SAP S/4HANA, NetSuite, Coupa, Oracle**), NEXUS continuously reconstructs live **Procure-to-Pay (P2P)** event flows, isolates hidden cycle-time bottlenecks, predicts delivery risk using cost-sensitive machine learning, catches 3-way matching and duplicate invoice leakages, and formulates calibrated, human-in-the-loop action plans.
-
----
-
-## 🚨 The Enterprise Problem
-
-Enterprises spend billions annually on procurement, yet lose **3% to 7% of total procurement spend** to operational friction, invisible delays, and compliance failures:
-
-1. **Cycle-Time Latency:** Requisitions and purchase orders spend **70%+ of total lifecycle time idling in queues** waiting for sign-offs.
-2. **Maverick Spend & Split POs:** Orders structured just under authorization limits (e.g. $9,900 to bypass $10,000 threshold) bypass competitive bidding.
-3. **Supplier Lead Time Blind Spots:** Planners discover supplier delays only *after* contractual delivery dates have passed.
-4. **3-Way Matching Price & Quantity Creep:** Subtle discrepancies between POs, Goods Receipts (GR), and Invoices drain millions in unverified billing.
-5. **Duplicate Invoices & Lost Discounts:** Overpayments and missed 2/10 Net 30 early settlement terms directly reduce free cash flow.
-6. **Uncalibrated Alarm Fatigue:** Traditional rule engines flood procurement teams with trivial alerts, while uncalibrated LLMs hallucinate explanations.
-
-👉 *For full mathematical details and industry benchmarks, read [`docs/problem-statement-and-solutions.md`](docs/problem-statement-and-solutions.md).*
-
----
-
-## 💡 The NEXUS Solution
-
-```
-┌─────────────────┐     ┌──────────────────────┐     ┌──────────────────────┐
-│  1. Ingestion   │ ──> │  2. Process Mining   │ ──> │  3. Predictive Risk  │
-│  ERP Event Logs │     │  PM4Py DFG & Variants│     │  Asymmetric Cost ML  │
-└─────────────────┘     └──────────────────────┘     └──────────────────────┘
-                                                                 │
-┌─────────────────┐     ┌──────────────────────┐                 ▼
-│  6. Execution   │ <── │  5. Human Approval   │ <── ┌──────────────────────┐
-│  Automated Sync │     │  Audit-Grade Cockpit │     │  4. Calibrated RCA   │
-└─────────────────┘     └──────────────────────┘     │  Heuer ACH + Kent CIA│
-                                                     └──────────────────────┘
-```
-
-* **Process Mining Conformance Engine (`PM4Py`):** Reconstructs actual execution graphs (DFGs), quantifies variant frequencies, and isolates transition latencies (P50, P90, P99).
-* **Deterministic Compliance Sieve:** Real-time 3-way reconciliation (PO vs GR vs Invoice), split PO detection, and authorization limit checks.
-* **Cost-Sensitive Delay Forecaster:** Machine learning model weighted with an **Asymmetric Error Cost Matrix** (penalizing missed disruptions 10x–25x over false alarms).
-* **Calibrated Agentic Root-Cause Analysis (RCA):**
-  - **Richards Heuer Analysis of Competing Hypotheses (ACH):** Evaluates competing causes (Supplier Capacity vs Internal Approval vs Carrier Freight) against empirical event evidence.
-  - **Sherman Kent Estimative Language:** Constrains AI narratives to CIA-calibrated probability bands (*"Almost Certain (90–99%)"*, *"Probable (60–80%)"*).
-* **Human-in-the-Loop (HITL) Governance:** High-impact interventions require human sign-off with tamper-evident audit logging.
+Sitting directly above core ERPs (**SAP S/4HANA, NetSuite, Coupa, Oracle**), NEXUS provides:
+1. **Interactive Control Tower Cockpit:** Real-time web UI with live cycle-time bottleneck telemetry and Human-in-the-Loop action gates.
+2. **Multi-Tenant Procurement RAG with RBAC:** Ingests Master Service Agreements (MSAs), SLAs, and policies with strict role-based access isolation (`Buyer`, `Manager`, `Executive`).
+3. **Agentic Tool-Calling & Action Dispatcher:** Automatically inspects purchase orders, performs 3-way reconciliation, and stages administrative holds with immutable audit logs.
+4. **Process Mining Conformance Engine (`PM4Py`):** Quantifies transition latencies (P50, P90, P99) and flags process deviations.
+5. **Calibrated Root-Cause Intelligence:** Constrains AI reasoning to **Richards Heuer's Analysis of Competing Hypotheses (ACH)** and **Sherman Kent CIA estimative standards** (*"Almost Certain (90–99%)"*, *"Probable (60–80%)"*).
 
 ---
 
 ## 🏛️ System Architecture
 
 ```
-Nexus_ct/
-├── backend/
-│   ├── main.py                     # FastAPI application entrypoint
-│   ├── database.py                 # SQLAlchemy session & engine
-│   ├── models.py                   # 11 normalized enterprise relational schemas
-│   ├── routes.py                   # 20+ REST API endpoints
-│   └── services/
-│       ├── process_intelligence.py # PM4Py graph & cycle-time analytics
-│       ├── procurement_engine.py   # Deterministic compliance & risk engine
-│       ├── root_cause.py           # Heuer ACH & diagnostic synthesis
-│       ├── ai_service.py           # Azure OpenAI / Calibrated agent service
-│       ├── action_planner.py       # Prescriptive mitigation plan formulation
-│       ├── approval_service.py     # HITL approval workflow state machine
-│       ├── execution_service.py    # Automated action execution & ERP webhooks
-│       └── audit_service.py        # Append-only immutable audit logging
-├── process_intelligence/
-│   ├── process_analysis.py         # Standalone process mining analysis scripts
-│   └── validate_event_log.py       # Event log schema & data contract validator
-├── docs/
-│   ├── architecture.md             # Complete system & data pipeline architecture
-│   ├── problem-statement-and-solutions.md # Enterprise failure modes & technical solutions
-│   ├── process-intelligence.md     # Algorithmic & mathematical specifications
-│   ├── data-contract.md            # IEEE XES / PM4Py shared data contract
-│   ├── bussiness-process.md        # Detailed P2P lifecycle workflow guide
-│   └── monetization-strategy.md    # Commercial model, SaaS tiers & ROI framework
-├── tests/                          # Automated Pytest suite
-└── requirements.txt                # Python project dependencies
+                                  ┌───────────────────────────────────────────────┐
+                                  │      NEXUS OPERATOR COCKPIT (Frontend)        │
+                                  │  Role Switcher (RBAC) • Live Chat • HITL Card │
+                                  └──────────────────────┬────────────────────────┘
+                                                         │ HTTP / SSE Stream
+                                                         ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                               FASTAPI BACKEND ROUTER                                   │
+│  /api/v1/copilot/chat  •  /api/v1/copilot/stream  •  /api/v1/copilot/actions/decide    │
+└──────────────┬─────────────────────────────────────────┬───────────────────────────────┘
+               │                                         │
+               ▼                                         ▼
+┌───────────────────────────────┐         ┌──────────────────────────────────────────────┐
+│  MULTI-TENANT RAG ENGINE      │         │     AGENTIC TOOL DISPATCHER                  │
+│  • RBAC Document Sieve        │         │     • query_po_details(po_id)                │
+│  • Grounded Clause Citations  │         │     • audit_3way_matching(po_id)             │
+│  • Strict Zero-Leakage Filter │         │     • propose_po_hold(po_id) [HITL Gateway] │
+└──────────────┬────────────────┘         └──────────────────────┬───────────────────────┘
+               │                                                 │
+               ▼                                                 ▼
+┌───────────────────────────────┐         ┌──────────────────────────────────────────────┐
+│ KNOWLEDGE BASE (JSON / Vector)│         │ ENTERPRISE DATABASE (SQLite / PostgreSQL)    │
+│ MSAs, Vendor SLAs, SOP-2026   │         │ Suppliers, POs, Invoices, Goods Receipts     │
+└───────────────────────────────┘         └──────────────────────────────────────────────┘
 ```
 
-👉 *Read the complete technical specification in [`docs/architecture.md`](docs/architecture.md) and [`docs/process-intelligence.md`](docs/process-intelligence.md).*
+---
+
+## 🛡️ Forward Deployed Engineering (FDE) Capabilities
+
+### 1. Role-Based Access Control (RBAC) Procurement RAG
+* Multi-tenant search over vendor contracts (e.g. Apex Logistics, Titan Industrial) and enterprise policies.
+* **Security Boundary Guarantee:** A user logged in as a `Buyer` is strictly barred from accessing confidential Executive Audit & Fraud Governance charters. Attempts trigger a logged security notice with zero data leakage.
+
+### 2. Autonomous Tool Calling with Human-in-the-Loop (HITL)
+* The Copilot executes structured database tools to diagnose 3-way matching discrepancies (PO vs. Goods Receipt vs. Invoice).
+* When anomalous delays or price creep require action, the agent stages a **Purchase Order Administrative Hold** with status `PENDING_APPROVAL`, requiring explicit operator sign-off before execution.
+
+### 3. Sherman Kent CIA Probability Calibration
+* Eliminates uncalibrated LLM hallucinations by mapping epistemic confidence directly to standardized CIA probability bands:
+  - *"Almost Certain (90–99%)"*
+  - *"Probable (60–80%)"*
+  - *"Chances About Even (40–60%)"*
 
 ---
 
-## 💰 Monetization & Commercial Strategy
+## 🧪 Automated Verification & Evals (19/19 Passing)
 
-NEXUS is designed as a high-margin **B2B Enterprise SaaS** platform delivering a proven **>20x ROI** for mid-to-large enterprises:
+NEXUS includes an automated test suite verifying data science algorithms, process mining models, and FDE agent guardrails:
 
-| Tier | Annual Spend Volume | Price | Target Customer | Key Capabilities |
-| :--- | :--- | :--- | :--- | :--- |
-| **Starter** | Up to $50M | **$25,000 / yr** | Mid-market | 5 Core Rules, Variant Mining, Basic ML |
-| **Growth** | Up to $250M | **$75,000 / yr** | Mid-to-Large Enterprise | Full PM4Py DFG, Cost-Sensitive ML, Calibrated RCA |
-| **Enterprise** | Unlimited | **$180,000+ / yr** | Global Conglomerates | Dedicated VPC/Air-Gapped, Bi-directional ERP Sync, Custom SLAs |
+```bash
+# Run full test suite
+python -m pytest tests/ -v
+```
 
-### Additional Commercial Vectors:
-* **Gain-Share Performance Pricing:** 10%–15% contingency fee on verified duplicate invoices and recovered discounts.
-* **Supplier Network Passport:** Fast-track pre-cleared payment verification for verified suppliers.
-* **ERP Certified Marketplace Connectors:** Turnkey integrations for SAP S/4HANA, NetSuite, and Coupa.
-
-👉 *For the complete financial model and go-to-market plan, see [`docs/monetization-strategy.md`](docs/monetization-strategy.md).*
+### Verified Test Matrix:
+- `tests/test_fde_evals.py` (7 tests):
+  - `test_rbac_access_isolation`: Confirms Buyer cannot view executive whistleblower charter.
+  - `test_rbac_executive_elevation`: Confirms Executive receives authorized access.
+  - `test_rag_citation_fidelity`: Verifies payment terms match exact clause citations (*2/10 Net 30*).
+  - `test_agent_tool_po_query`: Validates PO database inspection tool.
+  - `test_agent_audit_3way_matching`: Validates 3-way reconciliation and variance calculation.
+  - `test_agent_hitl_action_lifecycle`: Validates staging, pending queue, and approval transition.
+  - `test_copilot_chat_endpoint`: Tests REST API response format and telemetry latency waterfall.
+- `tests/test_data_science.py` (12 tests):
+  - Cycle-time P50/P90/P99 latency profiling, bottleneck identification, variant conformance mining, and cost-sensitive delay prediction.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quickstart & Local Setup
 
-### 1. Prerequisites
-- Python 3.10+
-- Git
-
-### 2. Installation
+### 1. Local Installation
 ```bash
 # Clone the repository
 git clone https://github.com/Sanjaysk61/Nexus_ct.git
 cd Nexus_ct
 
-# Create and activate virtual environment
-python -m venv .venv
+# Activate virtual environment
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
-```
 
-### 3. Run the Backend API Server
-```bash
+# Run the FastAPI Control Tower & Cockpit
 uvicorn backend.main:app --reload --port 8000
 ```
-- Interactive Swagger API Documentation: `http://localhost:8000/docs`
-- Redoc API Specification: `http://localhost:8000/redoc`
 
-### 4. Run Test Suite
+- **Interactive Control Tower Cockpit:** Open `http://localhost:8000/` or `http://localhost:8000/cockpit`
+- **Swagger REST API Documentation:** `http://localhost:8000/docs`
+
+### 2. Docker Deployment
 ```bash
-pytest tests/ -v
+# Build and run containerized platform
+docker compose up --build
 ```
-
----
-
-## 📜 Documentation Index
-
-* 📘 [Problem Statement & Engineered Solutions](docs/problem-statement-and-solutions.md)
-* 📐 [System Architecture Specification](docs/architecture.md)
-* 🔬 [Process Intelligence & Algorithmic Specification](docs/process-intelligence.md)
-* 📋 [Enterprise Data Contract](docs/data-contract.md)
-* 🔄 [P2P Business Process Guide](docs/bussiness-process.md)
-* 💼 [Monetization Strategy & Commercial Roadmap](docs/monetization-strategy.md)
 
 ---
 
 ## 📄 License
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.

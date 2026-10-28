@@ -1,0 +1,86 @@
+[
+  {
+    "document_id": "MSA-APEX-2026",
+    "title": "Master Services Agreement - Apex Logistics Corp",
+    "vendor_id": "SUP-001",
+    "role_required": "buyer",
+    "category": "freight_logistics",
+    "sections": [
+      {
+        "clause": "Section 4.1 - Payment Terms",
+        "text": "Apex Logistics shall provide invoices with 2/10 Net 30 payment terms. The Buyer is entitled to a 2% settlement discount if payment is remitted within 10 business days of validated goods receipt. The full invoice balance becomes due at 30 days."
+      },
+      {
+        "clause": "Section 7.3 - Service Level Commitments & Delay Penalties",
+        "text": "Apex Logistics guarantees freight dispatch within 48 hours of purchase order receipt. For any unexcused delay exceeding 5 business days from the agreed delivery date, the Buyer reserves the right to deduct a liquidated damages penalty of 1.5% of total freight order value per delayed week, capped at 15% maximum."
+      },
+      {
+        "clause": "Section 9.2 - Fuel Surcharge Calculation",
+        "text": "Fuel surcharges shall be tied directly to the national diesel index published on the first business day of each calendar month. Surcharges may not be adjusted retroactively without explicit 14-day prior written notice."
+      }
+    ]
+  },
+  {
+    "document_id": "MSA-TITAN-2026",
+    "title": "Master Supply Contract - Titan Industrial Supplies",
+    "vendor_id": "SUP-002",
+    "role_required": "buyer",
+    "category": "industrial_goods",
+    "sections": [
+      {
+        "clause": "Section 3.2 - Invoicing & 3-Way Matching Tolerance",
+        "text": "Titan Industrial agrees that invoices are verified against authorized Purchase Orders and certified Goods Receipts. Price variances exceeding $50.00 or quantity variances exceeding 1.0% shall automatically place the invoice in dispute status until approved by procurement management."
+      },
+      {
+        "clause": "Section 5.1 - Payment Terms",
+        "text": "Standard payment terms are Net 45 days from the date of final 3-way matching certification. Early payment discounts do not apply unless specified in an individualized purchase schedule."
+      },
+      {
+        "clause": "Section 8.4 - Defect Rate & Returns",
+        "text": "Titan Industrial warrants a component defect rate under 500 DPPM (Defective Parts Per Million). Batches failing inspection shall be replaced at supplier expense within 72 hours of notice."
+      }
+    ]
+  },
+  {
+    "document_id": "SOP-PROC-2026-V4",
+    "title": "Global Procurement Compliance Standard Operating Procedure",
+    "vendor_id": "ALL",
+    "role_required": "manager",
+    "category": "enterprise_policy",
+    "sections": [
+      {
+        "clause": "Policy Rule 2.1 - Split Purchase Order Prohibition",
+        "text": "Department buyers are strictly prohibited from structuring split purchase orders (e.g. creating multiple orders between $9,000 and $9,999 within a 30-day window) to circumvent the $10,000 competitive bidding and manager authorization threshold."
+      },
+      {
+        "clause": "Policy Rule 3.4 - Dual Sign-Off Authorization Limits",
+        "text": "Purchase requisitions exceeding $50,000 require dual sign-off from both the Department Head and the Corporate Procurement Director prior to purchase order release."
+      },
+      {
+        "clause": "Policy Rule 6.2 - Mandatory Supplier Hold Protocol",
+        "text": "If a supplier's on-time delivery rate falls below 80% over 60 consecutive days, or if unresolved 3-way matching discrepancies exceed $10,000, procurement managers must trigger a formal Supplier Hold to block new PO issuance."
+      }
+    ]
+  },
+  {
+    "document_id": "GOV-AUDIT-2026-EXEC",
+    "title": "Executive Anti-Fraud & Forensic Audit Charter",
+    "vendor_id": "ALL",
+    "role_required": "executive",
+    "category": "executive_governance",
+    "sections": [
+      {
+        "clause": "Audit Clause 1.1 - Forensic Duplicate Invoice Screening",
+        "text": "The Internal Audit Committee mandates automated screening for duplicate invoices matching on vendor_id, invoice_amount, and date variance within 14 days. Any verified duplicate billing exceeding $25,000 triggers immediate supplier suspension and forensic clawback."
+      },
+      {
+        "clause": "Audit Clause 2.4 - Executive Whistleblower & Conflict of Interest",
+        "text": "Employees must disclose any familial or financial affiliations with registered vendors. Violations of competitive bidding regulations result in immediate disciplinary review and contract termination."
+      },
+      {
+        "clause": "Audit Clause 4.2 - Debarment & Clawback Enforcement",
+        "text": "Suppliers implicated in willful overbilling or counterfeit parts supply are placed on the Corporate Permanent Debarment List, with legal authorization to freeze accounts payable balances pending arbitration."
+      }
+    ]
+  }
+]

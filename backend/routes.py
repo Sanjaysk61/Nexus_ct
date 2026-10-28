@@ -933,3 +933,96 @@ def execute_procurement(
         "action_plan": action_plan,
         "execution": execution_result,
     }
+
+# ---------------------------------------------------------------------------
+# FDE UPGRADE: ENTERPRISE COPILOT, RAG, & TOOL-CALLING ACTION DISPATCHER
+# ---------------------------------------------------------------------------
+from fastapi.responses import StreamingResponse
+from backend.services.agent_service import agent_service
+import json
+import asyncio
+
+
+class CopilotChatRequest(BaseModel):
+    query: str
+    role: str = "buyer"
+    operator: str = "Operator"
+
+
+class ActionDecisionRequest(BaseModel):
+    decision: str  # APPROVED or REJECTED
+    reviewer: str
+    comments: str = ""
+
+
+@router.post("/api/v1/copilot/chat")
+def copilot_chat(req: CopilotChatRequest, db: Session = Depends(get_db)):
+    """
+    Enterprise Copilot Chat Endpoint.
+    Integrates RBAC-filtered contract RAG, tool calling, and HITL staging.
+    """
+    result = agent_service.process_query(
+        query=req.query,
+        role=req.role,
+        operator=req.operator,
+        db=db
+    )
+    return result
+
+
+@router.get("/api/v1/copilot/stream")
+def copilot_stream(query: str, role: str = "buyer", operator: str = "Operator", db: Session = Depends(get_db)):
+    """
+    Server-Sent Events (SSE) Streaming Endpoint for token-by-token real-time cockpit updates.
+    """
+    result = agent_service.process_query(
+        query=query,
+        role=role,
+        operator=operator,
+        db=db
+    )
+
+    def event_generator():
+        text = result["response_text"]
+        words = text.split(" ")
+        # Stream initial metadata
+        yield f"data: {json.dumps({'type': 'telemetry', 'telemetry': result['telemetry'], 'citations': result['citations']})}\n\n"
+        
+        # Stream word tokens
+        for i, word in enumerate(words):
+            yield f"data: {json.dumps({'type': 'token', 'token': word + ' '})}\n\n"
+            time.sleep(0.015)
+
+        # Stream action or completion
+        if result.get("pending_action"):
+            yield f"data: {json.dumps({'type': 'action', 'action': result['pending_action']})}\n\n"
+        yield f"data: {json.dumps({'type': 'done'})}\n\n"
+
+    import time
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
+
+
+@router.get("/api/v1/copilot/tools")
+def copilot_tools():
+    """Returns the schema of registered tools for the FDE agent."""
+    return {"tools": agent_service.get_registered_tools()}
+
+
+@router.get("/api/v1/copilot/pending-actions")
+def copilot_pending_actions():
+    """Returns all pending actions requiring human approval."""
+    return {"pending_actions": agent_service.get_pending_actions()}
+
+
+@router.post("/api/v1/copilot/actions/{action_id}/decide")
+def copilot_decide_action(action_id: str, req: ActionDecisionRequest):
+    """Executes a human approval or rejection of an agent-staged action."""
+    res = agent_service.decide_action(
+        action_id=action_id,
+        decision=req.decision,
+        reviewer=req.reviewer,
+        comments=req.comments
+    )
+    if "error" in res:
+        raise HTTPException(status_code=400, detail=res["error"])
+    return res

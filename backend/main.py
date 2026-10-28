@@ -58,3 +58,13 @@ def health_check():
             "database": "disconnected",
             "error": str(error),
         }
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from pathlib import Path
+
+FRONTEND_DIR = Path(__file__).resolve().parents[1] / "frontend"
+app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
+
+@app.get("/cockpit")
+def serve_cockpit():
+    return FileResponse(FRONTEND_DIR / "index.html")
